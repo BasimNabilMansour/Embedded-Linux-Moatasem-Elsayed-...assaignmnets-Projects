@@ -1,6 +1,6 @@
-import webbrowser
-import time
 
+import time
+import requests
 time.sleep(2)
 
 def menu():
@@ -12,11 +12,22 @@ menu()
 while True:
  choice=input("Choose which Request do you want  : ")
  if choice == '1':
-    webbrowser.get('firefox').open('https://api.ipify.org/?format=json')
+    url=requests.get("https://api.ipify.org/?format=json")
+    print(url.text)
  elif choice == '2':
-    webbrowser.get('firefox').open('https://whatismyipaddress.com')
+    url=requests.get("https://ipinfo.io")
+    print(url.text)
+ else:  
     print("try again")  
  
+
+ 
+    
+
+
+    
+
+       
 
  
     
