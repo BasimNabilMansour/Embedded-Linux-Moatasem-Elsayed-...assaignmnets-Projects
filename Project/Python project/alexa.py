@@ -1,14 +1,15 @@
 #!/usr/bin/python3
-
+import speech_recognition as sr 
+import pyttsx3
+from gtts import gTTS
+from playsound import playsound
 import webbrowser
 from time import ctime
 import os
-from playsound import playsound
-from gtts import gTTS
 import random
-import speech_recognition as sr 
-import pyttsx3
 import datetime
+
+
 
 def respond(voice_data):
     global alexa
