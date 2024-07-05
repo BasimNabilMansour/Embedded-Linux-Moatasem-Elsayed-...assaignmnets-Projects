@@ -1,14 +1,17 @@
 #!/usr/bin/python3
 import speech_recognition as sr 
 import pyttsx3
+import pyaudio
+import datetime
 from gtts import gTTS
 from playsound import playsound
 import webbrowser
 from time import ctime
 import os
 import random
-import datetime
-
+import calendar
+import sys
+sys.tracebacklimit=0
 
 
 def respond(voice_data):
@@ -31,7 +34,7 @@ def get_voice_command():
 
 def tell_time():
     now = datetime.datetime.now()
-    current_time = now.strftime("%H:%M:%S")
+    current_time = now.strftime("%Y-%m-%d  %H:%M:%S")
     return current_time
 
 def respond_with_voice(response):
@@ -73,3 +76,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
