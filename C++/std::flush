@@ -1,0 +1,17 @@
+What does std :: flush do in C++?
+
+std::flush Flushes the output sequence os as if by calling os
+
+std::flush is a manipulator in C++ that flushes the output buffer of a stream. When you use it with an output stream like std::cout, it forces the buffer to be written to the console immediately. This is useful when you want to ensure that all output has been displayed up to that point, especially in scenarios where you need real-time updates or when debugging.
+....................................................................................................................................................................................................
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, world!" << std::flush;
+    return 0;
+}
+...................................................................................................................................................................................................
+In this example, the std::flush manipulator forces the output "Hello, world!" to be flushed from the buffer and displayed on the console immediately. Normally, the buffer would flush automatically when the buffer is full or when the program terminates, but std::flush allows you to do it manually.
+
+
+Without std::flush, the output would be the same, but may not appear in real time.
