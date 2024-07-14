@@ -1,0 +1,8 @@
+step 1:
+Open vscode Terminal and write (  "make build" without the quotes  )
+
+step 2:
+Write (  "ls" without the quotes ) on terminal to check that the executalble file is created (i named it main)
+
+step 3:
+Write ( "make run" without the quotes ) to run the program and show the outputs.
