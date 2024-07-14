@@ -4,10 +4,10 @@ CXXFLAGS = -Wall -Wextra -pedantic -v
 # Compiler
 CXX = g++
 
-# Target executable
+# Target executable (named main)
 TARGET = main
 
-# Source file
+# Source file (named main.cpp)
 SRC = main.cpp
 
 # Build target
