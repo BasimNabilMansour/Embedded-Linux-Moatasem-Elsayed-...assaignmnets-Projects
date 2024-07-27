@@ -1,20 +1,34 @@
 #include <iostream>
 
 
-bool searchNumber(int arr[], int size, int num) 
+void SearchNumber(int arr[], int size, int search) 
 {
-    for (int i = 0; i < size; i++) 
-    {
-        if (arr[i] == num) 
+    int flag=0;
+    
+        for (int i = 0; i <= size; i++) 
         {
-            return true;
+            if (arr[i] == search) 
+            {
+                std::cout << "The number " << search << " is found in the array in index."<<i << std::endl;
+                flag=1;
+            }
+            
         }
-    }
-    return false;
+        if (flag==0)
+        {
+            std::cout << "The number " << search << " is not found in the array." << std::endl;
+            
+        }
+
+    
 }
 
 int main() 
 {
+    while (1)
+    {
+        
+    
     int arr[] = {1, 3, 5, 7, 2, 8, 6};
     int size = sizeof(arr) / sizeof(arr[0]);
     int num;
@@ -22,14 +36,8 @@ int main()
     std::cout << "Enter the number to search: ";
     std::cin >> num;
 
-    if (searchNumber(arr, size, num)) 
-    {
-        std::cout << "The number " << num << " is found in the array." << std::endl;
-    } 
-    else 
-    {
-        std::cout << "The number " << num << " is not found in the array." << std::endl;
+    SearchNumber(arr,size,num);
     }
-
     return 0;
 }
+
