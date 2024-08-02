@@ -2,7 +2,8 @@
 #include <vector>
 #include <algorithm>  
 
-int main() 
+
+void search(void)
 {
     int size;
 
@@ -25,7 +26,6 @@ int main()
         std::cout << array[i] << " ";
     }
     std::cout << std::endl;
-
     int target;
     // Get the number to search for
     std::cout << "Enter the number you want to search for: ";
@@ -41,6 +41,13 @@ int main()
     } else {
         std::cout << "Number not found in the array." << std::endl;
     }
+}
+
+int main() 
+{
+    
+    search();
+    
 
     return 0;
 }
