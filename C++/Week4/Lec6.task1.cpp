@@ -1,156 +1,90 @@
 #include <iostream>
-#include <cstring>
+#include <cstring> // For strlen, strcpy
+#include <cassert> // For assert
 
-class MyString 
-{
-    private:
-        char* data;
-        size_t length;
+class MyString {
+private:
+    char* data ;
 
-    public:
-        // Constructors
-        MyString() : data(nullptr), length(0) {}
+public:
+    // Default constructor
+    MyString() : data(new char[1]{'\0'}) {}
 
-        MyString(const char* str) 
-        {
-            length = std::strlen(str);
-            data = new char[length + 1];
-            std::strcpy(data, str);
-        }
+    // Parameterized constructor
+    MyString(const char* str) {
+        size_t length = std::strlen(str);
+        data = new char[length + 1];
+        std::strcpy(data, str);
+    }
 
-        MyString(const MyString& other) { // Copy constructor
-            length = other.length;
-            data = new char[length + 1];
-            std::strcpy(data, other.data);
-        }
+    // Copy constructor
+    MyString(const MyString& other) {
+        size_t length = std::strlen(other.data);
+        data = new char[length + 1];
+        std::strcpy(data, other.data);
+    }
 
-        MyString(MyString&& other) noexcept // Move constructor
-            : data(other.data), length(other.length) {
-            other.data = nullptr;
-            other.length = 0;
-        }
+    // Move constructor
+    MyString(MyString&& other) noexcept : data(other.data) {
+        other.data = nullptr;
+    }
 
-        // Destructor
-        ~MyString() {
+    // Destructor
+    ~MyString() {
+        delete[] data;
+    }
+
+    // Copy assignment operator
+    MyString& operator=(const MyString& other) {
+        if (this != &other) {
             delete[] data;
-        }
-
-        // Assignment operator
-        MyString& operator=(const MyString& other) {
-            if (this == &other) return *this; // Self-assignment check
-            delete[] data;
-
-            length = other.length;
+            size_t length = std::strlen(other.data);
             data = new char[length + 1];
             std::strcpy(data, other.data);
-            return *this;
         }
+        return *this;
+    }
 
-        MyString& operator=(MyString&& other) noexcept { // Move assignment
-            if (this == &other) return *this; // Self-assignment check
+    // Move assignment operator
+    MyString& operator=(MyString&& other) noexcept {
+        if (this != &other) {
             delete[] data;
-
             data = other.data;
-            length = other.length;
-
             other.data = nullptr;
-            other.length = 0;
-            return *this;
         }
+        return *this;
+    }
 
-        // Overloading the + operator
-        MyString operator+(const MyString& other) const {
-            size_t newLength = length + other.length;
-            char* newData = new char[newLength + 1];
+    // Concatenate
+    MyString operator+(const MyString& other) const {
+        size_t length1 = std::strlen(data);
+        size_t length2 = std::strlen(other.data);
+        char* newData = new char[length1 + length2 + 1];
+        std::strcpy(newData, data);
+        std::strcat(newData, other.data);
+        MyString newString;
+        newString.data = newData;
+        return newString;
+    }
 
-            std::strcpy(newData, data);
-            std::strcat(newData, other.data);
+    // Access element
+    char& operator[](size_t index) {
+        assert(index < std::strlen(data)); // Simple boundary check
+        return data[index];
+    }
 
-            MyString newString(newData);
-            delete[] newData;
-            return newString;
-        }
-
-        // Overloading the += operator
-        MyString& operator+=(const MyString& other) {
-            *this = *this + other;
-            return *this;
-        }
-
-        // Overloading the [] operator
-        char& operator[](size_t index) {
-            return data[index];
-        }
-
-        const char& operator[](size_t index) const {
-            return data[index];
-        }
-
-        // Overloading the == operator
-        bool operator==(const MyString& other) const {
-            return std::strcmp(data, other.data) == 0;
-        }
-
-        // Overloading the != operator
-        bool operator!=(const MyString& other) const {
-            return !(*this == other);
-        }
-
-        // Overloading the < operator
-        bool operator<(const MyString& other) const {
-            return std::strcmp(data, other.data) < 0;
-        }
-
-        // Overloading the <= operator
-        bool operator<=(const MyString& other) const {
-            return std::strcmp(data, other.data) <= 0;
-        }
-
-        // Overloading the > operator
-        bool operator>(const MyString& other) const {
-            return std::strcmp(data, other.data) > 0;
-        }
-
-        // Overloading the >= operator
-        bool operator>=(const MyString& other) const {
-            return std::strcmp(data, other.data) >= 0;
-        }
-
-        // Overloading the << operator for printing
-        friend std::ostream& operator<<(std::ostream& os, const MyString& str) {
-            os << str.data;
-            return os;
-        }
-
-        // Length method
-        size_t size() const {
-            return length;
-        }
-
-        // Conversion operator to const char*
-        operator const char*() const {
-            return data;
-        }
+    // Print string
+    void print() const {
+        std::cout << data;
+    }
 };
 
 int main() {
-    MyString str1 = "Hello";
-    MyString str2 = " World";
-    MyString str3 = str1 + str2;
+    MyString s1("Hello");
+    MyString s2(" World ");
+    MyString s3 = s1 + s2;
 
-    std::cout << "str1: " << str1 << std::endl;
-    std::cout << "str2: " << str2 << std::endl;
-    std::cout << "str3: " << str3 << std::endl;
-
-    str1 += str2;
-    std::cout << "After str1 += str2: " << str1 << std::endl;
-
-    std::cout << "str3[0]: " << str3[0] << std::endl;
-    std::cout << "Length of str3: " << str3.size() << std::endl;
-
-    if (str1 == str3) {
-        std::cout << "str1 is equal to str3" << std::endl;
-    }
+    s3.print(); // Output: Hello World
 
     return 0;
 }
